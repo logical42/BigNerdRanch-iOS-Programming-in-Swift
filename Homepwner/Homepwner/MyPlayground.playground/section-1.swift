@@ -8,8 +8,8 @@ let randomAdjectiveList = ["Fluffy", "Rusty", "Shiny"]
 let randomNounList = ["Bear", "Tiger", "Mac"]
 var adjectiveIndex = arc4random() % UInt32(randomAdjectiveList.count)
 var nounIndex = arc4random() % UInt32(randomNounList.count)
-randomAdjectiveList.bridgeToObjectiveC().objectAtIndex(Int(adjectiveIndex))
-
+var blah = "asdf\(nounIndex)"
+blah.utf16count
 //var randomName = "\(randomAdjectiveList[adjectiveIndex]) \(randomNounList[nounIndex])"
 arc4random().toUIntMax() % 10
 
