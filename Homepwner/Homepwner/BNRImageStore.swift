@@ -21,8 +21,8 @@ class BNRImageStore: NSObject {
     func setImage(image:UIImage,forKey key:String) {
         self.dictionary.setValue(image, forKey:key)
     }
-    func imageForKey(key:String) -> UIImage {
-        return self.dictionary.objectForKey(key) as UIImage
+    func imageForKey(key:String) -> UIImage? {
+        return self.dictionary.objectForKey(key) as? UIImage
     }
     func deleteImageForKey(key:String?) {
         if !key {

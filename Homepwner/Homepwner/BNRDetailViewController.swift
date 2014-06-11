@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BNRDetailViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class BNRDetailViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet var nameField : UITextField
     @IBOutlet var serialNumberField : UITextField
@@ -16,6 +16,10 @@ class BNRDetailViewController: UIViewController, UINavigationControllerDelegate,
     @IBOutlet var dateLabel : UILabel
     @IBOutlet var imageView : UIImageView
     @IBOutlet var toolbar : UIToolbar
+    
+    @IBAction func backgroundTapped(sender : AnyObject) {
+        self.view.endEditing(true)
+    }
     
     @IBAction func takePicture(sender : AnyObject) {
         
@@ -85,6 +89,10 @@ class BNRDetailViewController: UIViewController, UINavigationControllerDelegate,
         BNRImageStore.sharedStore.setImage(image, forKey:self.item.itemKey)
         self.imageView.image = image
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    func textFieldShouldReturn(textField:UITextField?) -> Bool {
+        textField!.resignFirstResponder()
+        return true
     }
 
     /*
