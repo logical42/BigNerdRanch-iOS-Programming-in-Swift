@@ -9,16 +9,16 @@
 import UIKit
 @IBDesignable
 class BNRItemsViewController: UITableViewController {
-    @IBOutlet var _headerView:UIView?
-    @IBInspectable var headerView:UIView {
-        get {
-            if _headerView? {
-                return _headerView!
-            }
-            NSBundle.mainBundle().loadNibNamed("HeaderView", owner: self, options: nil)
-            return _headerView!
-        }
-    }
+//    @IBOutlet var _headerView:UIView?
+//    @IBInspectable var headerView:UIView {
+//        get {
+//            if _headerView? {
+//                return _headerView!
+//            }
+//            NSBundle.mainBundle().loadNibNamed("HeaderView", owner: self, options: nil)
+//            return _headerView!
+//        }
+//    }
     init() {
         super.init(style:UITableViewStyle.Plain)
         let navItem = self.navigationItem!
@@ -26,7 +26,7 @@ class BNRItemsViewController: UITableViewController {
         navItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add,
                                             target: self,
                                             action: "addNewItem:")
-
+        navItem.leftBarButtonItem = self.editButtonItem()
         for i in 0...5 {
             BNRItemStore.sharedStore.createItem()
         }
@@ -48,8 +48,8 @@ class BNRItemsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "blah")
-        let header = self.headerView
-        self.tableView.tableHeaderView = header
+//        let header = self.headerView
+//        self.tableView.tableHeaderView = header
     }
 
     override func didReceiveMemoryWarning() {
@@ -86,16 +86,16 @@ class BNRItemsViewController: UITableViewController {
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Top)
     }
     
-    @IBAction func toggleEditingMode(sender:AnyObject) {
-        if self.editing {
-            self.setEditing(false, animated: true)
-            sender.setTitle("Editing", forState: UIControlState.Normal)
-        }
-        else {
-            self.setEditing(true, animated: true)
-            sender.setTitle("Done", forState: UIControlState.Normal)
-        }
-    }
+//    @IBAction func toggleEditingMode(sender:AnyObject) {
+//        if self.editing {
+//            self.setEditing(false, animated: true)
+//            sender.setTitle("Editing", forState: UIControlState.Normal)
+//        }
+//        else {
+//            self.setEditing(true, animated: true)
+//            sender.setTitle("Done", forState: UIControlState.Normal)
+//        }
+//    }
     override func tableView(tableView: UITableView?, canEditRowAtIndexPath indexPath: NSIndexPath?) -> Bool {
         return true
     }
