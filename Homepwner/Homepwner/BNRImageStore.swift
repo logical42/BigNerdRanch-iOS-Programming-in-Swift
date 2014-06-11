@@ -28,7 +28,7 @@ class BNRImageStore: NSObject {
         if !key {
             return
         }
-        self.dictionary.setNilValueForKey(key!)
+        self.dictionary.removeObjectForKey(key!)
     }
 }
 

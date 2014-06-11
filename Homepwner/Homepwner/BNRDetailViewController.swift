@@ -59,10 +59,8 @@ class BNRDetailViewController: UIViewController, UINavigationControllerDelegate,
         self.serialNumberField.text = item.serialNumber
         self.valueField.text = String(item.valueInDollars)
         self.dateLabel.text = BNRDetailViewController.dateFormatter.stringFromDate(item.dateCreated)
-        let image = BNRImageStore.sharedStore.dictionary.objectForKey(item.itemKey) as? UIImage
-        if image {
-            self.imageView.image = image!
-        }
+        let image = BNRImageStore.sharedStore.imageForKey(item.itemKey)
+        self.imageView.image = image
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
