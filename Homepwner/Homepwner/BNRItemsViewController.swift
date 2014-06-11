@@ -41,26 +41,18 @@ class BNRItemsViewController: UITableViewController {
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "blah")
         var header = self.headerView
         self.tableView.tableHeaderView = header
-    
-//        self.tableView.tableHeaderView = self.headerView
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // #pragma mark - Table view data source
-
     override func numberOfSectionsInTableView(tableView: UITableView?) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
         return 1
     }
 
     override func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
         return BNRItemStore.count
     }
 
@@ -77,38 +69,44 @@ class BNRItemsViewController: UITableViewController {
         return cell
     }
     @IBAction func addNewItem(sender:AnyObject) {
+        var newItem = BNRItemStore.sharedStore.createItem()
+        let lastRow = BNRItemStore.items.indexOfObject(newItem)
         
+        let indexPath = NSIndexPath(forRow:lastRow, inSection: 0)
+        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Top)
     }
     
     @IBAction func toggleEditingMode(sender:AnyObject) {
-        
-//        if self.isEditing {
-//            
-//        }
+        if self.editing {
+            self.setEditing(false, animated: true)
+            sender.setTitle("Editing", forState: UIControlState.Normal)
+        }
+        else {
+            self.setEditing(true, animated: true)
+            sender.setTitle("Done", forState: UIControlState.Normal)
+        }
     }
     override func tableView(tableView: UITableView?, canEditRowAtIndexPath indexPath: NSIndexPath?) -> Bool {
         return true
     }
 
-
-
     override func tableView(tableView: UITableView?, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath?) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
+            let items = BNRItemStore.items
+            let item = items.objectAtIndex(indexPath!.row) as BNRItem
+            BNRItemStore.sharedStore.removeItem(item)
             // Delete the row from the data source
-//            tableView!.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
-        } else if editingStyle == UITableViewCellEditingStyle.Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            tableView!.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
+        }
     }
 
-
-    /*
-    // Override to support rearranging the table view.
     override func tableView(tableView: UITableView?, moveRowAtIndexPath fromIndexPath: NSIndexPath?, toIndexPath: NSIndexPath?) {
-
+        BNRItemStore.sharedStore.moveItemAtIndex(fromIndexPath!.row, toIndex: toIndexPath!.row)
     }
-    */
-
+    override func tableView(tableView: UITableView?, didSelectRowAtIndexPath indexPath: NSIndexPath?) {
+        var detailViewController = BNRDetailViewController(nibName: nil, bundle: nil)
+        self.navigationController.pushViewController(detailViewController, animated: true)
+    }
     /*
     // Override to support conditional rearranging of the table view.
     override func tableView(tableView: UITableView?, canMoveRowAtIndexPath indexPath: NSIndexPath?) -> Bool {

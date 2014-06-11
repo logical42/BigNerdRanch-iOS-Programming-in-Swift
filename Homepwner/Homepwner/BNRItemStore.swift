@@ -29,6 +29,18 @@ class BNRItemStore: NSObject {
         self.allItems.append(item)
         return item
     }
+    func removeItem(item:BNRItem) {
+        var index = BNRItemStore.items.indexOfObject(item)
+        self.allItems.removeAtIndex(index)
+    }
+    func moveItemAtIndex(fromIndex: Int, toIndex:Int) {
+        if fromIndex == toIndex {
+            return
+        }
+        var item = self.allItems[fromIndex]
+        self.allItems.removeAtIndex(fromIndex)
+        self.allItems.insert(item, atIndex:toIndex)
+    }
 }
 
 let GlobalItemStore = BNRItemStore()
