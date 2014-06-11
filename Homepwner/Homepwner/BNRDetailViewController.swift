@@ -14,10 +14,42 @@ class BNRDetailViewController: UIViewController {
     @IBOutlet var serialNumberField : UITextField
     @IBOutlet var valueField : UITextField
     @IBOutlet var dateLabel : UILabel
-
+    class var dateFormatter:NSDateFormatter {
+        get {
+            GlobalDateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+            GlobalDateFormatter.timeStyle = NSDateFormatterStyle.NoStyle
+            return GlobalDateFormatter
+        }
+    }
+    var _item:BNRItem?
+    var item:BNRItem {
+        get {
+            return self._item!
+        }
+        set(item) {
+            self._item = item
+            self.navigationItem!.title = self.item.itemName
+        }
+    }
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         // Custom initialization
+    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        let item = self.item
+        self.nameField.text = item.itemName
+        self.serialNumberField.text = item.serialNumber
+        self.valueField.text = String(item.valueInDollars)
+        self.dateLabel.text = BNRDetailViewController.dateFormatter.stringFromDate(item.dateCreated)
+    }
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.view.endEditing(true)
+        let item = self.item
+        item.itemName = self.nameField.text
+        item.serialNumber = self.serialNumberField.text
+        item.valueInDollars = self.valueField.text.toInt()!
     }
 
     override func viewDidLoad() {
@@ -30,7 +62,7 @@ class BNRDetailViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
 
     /*
     // #pragma mark - Navigation
@@ -43,3 +75,4 @@ class BNRDetailViewController: UIViewController {
     */
 
 }
+let GlobalDateFormatter = NSDateFormatter()

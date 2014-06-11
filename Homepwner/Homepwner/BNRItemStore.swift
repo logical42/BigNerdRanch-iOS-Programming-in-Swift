@@ -9,7 +9,6 @@
 import UIKit
 
 class BNRItemStore: NSObject {
-
     var allItems = BNRItem[]()
     class var items:NSArray {
         get {

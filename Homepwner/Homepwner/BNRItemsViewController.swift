@@ -21,6 +21,12 @@ class BNRItemsViewController: UITableViewController {
     }
     init() {
         super.init(style:UITableViewStyle.Plain)
+        let navItem = self.navigationItem!
+        navItem.title = "Homepwner"
+        navItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add,
+                                            target: self,
+                                            action: "addNewItem:")
+
         for i in 0...5 {
             BNRItemStore.sharedStore.createItem()
         }
@@ -35,11 +41,14 @@ class BNRItemsViewController: UITableViewController {
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
-    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableView!.reloadData()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "blah")
-        var header = self.headerView
+        let header = self.headerView
         self.tableView.tableHeaderView = header
     }
 
@@ -62,14 +71,15 @@ class BNRItemsViewController: UITableViewController {
             cell.backgroundColor = UIColor.blueColor()
             cell.textColor = UIColor.whiteColor()
         }
-        var items = BNRItemStore.items
-        var item = items[indexPath!.row] as BNRItem
+        let items = BNRItemStore.items
+        let item = items[indexPath!.row] as BNRItem
         cell.textLabel.text = item.description
 
         return cell
     }
+    
     @IBAction func addNewItem(sender:AnyObject) {
-        var newItem = BNRItemStore.sharedStore.createItem()
+        let newItem = BNRItemStore.sharedStore.createItem()
         let lastRow = BNRItemStore.items.indexOfObject(newItem)
         
         let indexPath = NSIndexPath(forRow:lastRow, inSection: 0)
@@ -104,7 +114,8 @@ class BNRItemsViewController: UITableViewController {
         BNRItemStore.sharedStore.moveItemAtIndex(fromIndexPath!.row, toIndex: toIndexPath!.row)
     }
     override func tableView(tableView: UITableView?, didSelectRowAtIndexPath indexPath: NSIndexPath?) {
-        var detailViewController = BNRDetailViewController(nibName: nil, bundle: nil)
+        let detailViewController = BNRDetailViewController(nibName: nil, bundle: nil)
+        detailViewController.item = BNRItemStore.items[indexPath!.row] as BNRItem
         self.navigationController.pushViewController(detailViewController, animated: true)
     }
     /*
