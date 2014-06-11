@@ -75,6 +75,14 @@ class BNRDetailViewController: UIViewController, UINavigationControllerDelegate,
         item.valueInDollars = self.valueField.text.toInt()!
     }
 
+    override func viewDidLayoutSubviews() {
+        var subviews = self.view.subviews as UIView[]
+        for subview:UIView in subviews {
+            if subview.hasAmbiguousLayout() {
+                NSLog("AMBIGUOUS LAYOUT : \(subview)")
+            }
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
