@@ -10,6 +10,7 @@
 		A01D14CC1948D332002E4C39 /* BNRDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01D14CA1948D332002E4C39 /* BNRDetailViewController.swift */; };
 		A01D14CD1948D332002E4C39 /* BNRDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A01D14CB1948D332002E4C39 /* BNRDetailViewController.xib */; };
 		A03892851947CDF7007BA11A /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A03892841947CDF7007BA11A /* HeaderView.xib */; };
+		A08A336A19490407009674DC /* BNRImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08A336919490407009674DC /* BNRImageStore.swift */; };
 		A099BBF81947842A00C2FB31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A099BBF71947842A00C2FB31 /* AppDelegate.swift */; };
 		A099BBFA1947842A00C2FB31 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A099BBF91947842A00C2FB31 /* Images.xcassets */; };
 		A099BC061947842A00C2FB31 /* HomepwnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A099BC051947842A00C2FB31 /* HomepwnerTests.swift */; };
@@ -32,6 +33,7 @@
 		A01D14CA1948D332002E4C39 /* BNRDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BNRDetailViewController.swift; sourceTree = "<group>"; };
 		A01D14CB1948D332002E4C39 /* BNRDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BNRDetailViewController.xib; sourceTree = "<group>"; };
 		A03892841947CDF7007BA11A /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HeaderView.xib; path = ../HeaderView.xib; sourceTree = "<group>"; };
+		A08A336919490407009674DC /* BNRImageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BNRImageStore.swift; sourceTree = "<group>"; };
 		A099BBF21947842A00C2FB31 /* Homepwner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Homepwner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A099BBF61947842A00C2FB31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A099BBF71947842A00C2FB31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				A099BBF71947842A00C2FB31 /* AppDelegate.swift */,
 				A03892841947CDF7007BA11A /* HeaderView.xib */,
 				A01D14CA1948D332002E4C39 /* BNRDetailViewController.swift */,
+				A08A336919490407009674DC /* BNRImageStore.swift */,
 				A01D14CB1948D332002E4C39 /* BNRDetailViewController.xib */,
 				A099BC0F194784FC00C2FB31 /* BNRItemsViewController.swift */,
 				A099BC111947A14300C2FB31 /* BNRItem.swift */,
@@ -226,6 +229,7 @@
 				A01D14CC1948D332002E4C39 /* BNRDetailViewController.swift in Sources */,
 				A099BC121947A14300C2FB31 /* BNRItem.swift in Sources */,
 				A099BBF81947842A00C2FB31 /* AppDelegate.swift in Sources */,
+				A08A336A19490407009674DC /* BNRImageStore.swift in Sources */,
 				A099BC151947A91000C2FB31 /* BNRItemStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

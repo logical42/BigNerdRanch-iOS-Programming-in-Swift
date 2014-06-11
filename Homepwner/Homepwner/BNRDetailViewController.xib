@@ -7,14 +7,16 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BNRDetailViewController" customModule="Homepwner" customModuleProvider="target">
             <connections>
                 <outlet property="dateLabel" destination="ci9-t6-zCE" id="11V-vz-Oco"/>
+                <outlet property="imageView" destination="iIy-yE-apu" id="KHd-W5-oVl"/>
                 <outlet property="nameField" destination="al8-QS-xVh" id="gNd-Kw-Lzx"/>
                 <outlet property="serialNumberField" destination="a0W-nV-Hl0" id="0gT-b1-wMY"/>
+                <outlet property="toolbar" destination="MJz-ro-OQN" id="ror-TX-PaB"/>
                 <outlet property="valueField" destination="rCa-U8-D7m" id="Atd-fa-Sei"/>
                 <outlet property="view" destination="jdc-c8-x6j" id="3mN-S2-FbL"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="jdc-c8-x6j">
+        <view contentMode="scaleAspectFit" id="jdc-c8-x6j">
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
@@ -66,12 +68,26 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iIy-yE-apu">
+                    <rect key="frame" x="6" y="267" width="468" height="145.5"/>
+                </imageView>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MJz-ro-OQN">
+                    <rect key="frame" x="0.0" y="436" width="568" height="44"/>
+                    <items>
+                        <barButtonItem systemItem="camera" id="1Jq-XF-mO1">
+                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="takePicture:" destination="-1" id="eLc-N4-nEq"/>
+                            </connections>
+                        </barButtonItem>
+                    </items>
+                </toolbar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="AbstractSizeClassScreen[default]"/>
-            <point key="canvasLocation" x="68" y="174"/>
+            <point key="canvasLocation" x="94" y="176"/>
         </view>
     </objects>
 </document>

@@ -8,12 +8,28 @@
 
 import UIKit
 
-class BNRDetailViewController: UIViewController {
+class BNRDetailViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     @IBOutlet var nameField : UITextField
     @IBOutlet var serialNumberField : UITextField
     @IBOutlet var valueField : UITextField
     @IBOutlet var dateLabel : UILabel
+    @IBOutlet var imageView : UIImageView
+    @IBOutlet var toolbar : UIToolbar
+    
+    @IBAction func takePicture(sender : AnyObject) {
+        
+        let imagePicker = UIImagePickerController()
+        let cameraSourceType = UIImagePickerControllerSourceType.Camera
+        if UIImagePickerController.isSourceTypeAvailable(cameraSourceType) {
+            imagePicker.sourceType = cameraSourceType
+        } else {
+            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        }
+        imagePicker.delegate = self
+        self.presentViewController(imagePicker, animated: true, completion: nil)
+    }
+    
     class var dateFormatter:NSDateFormatter {
         get {
             GlobalDateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
@@ -31,6 +47,7 @@ class BNRDetailViewController: UIViewController {
             self.navigationItem!.title = self.item.itemName
         }
     }
+
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         // Custom initialization
@@ -42,6 +59,10 @@ class BNRDetailViewController: UIViewController {
         self.serialNumberField.text = item.serialNumber
         self.valueField.text = String(item.valueInDollars)
         self.dateLabel.text = BNRDetailViewController.dateFormatter.stringFromDate(item.dateCreated)
+        let image = BNRImageStore.sharedStore.dictionary.objectForKey(item.itemKey) as? UIImage
+        if image {
+            self.imageView.image = image!
+        }
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -54,7 +75,6 @@ class BNRDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
 
@@ -62,7 +82,12 @@ class BNRDetailViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: NSDictionary!) {
+        let image = info!.valueForKey(UIImagePickerControllerOriginalImage)! as UIImage
+        BNRImageStore.sharedStore.setImage(image, forKey:self.item.itemKey)
+        self.imageView.image = image
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 
     /*
     // #pragma mark - Navigation
