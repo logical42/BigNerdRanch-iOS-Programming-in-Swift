@@ -8,12 +8,14 @@
 
 import UIKit
 
-class BNRDrawView: UIView {
+class BNRDrawView: UIView, UIGestureRecognizerDelegate {
     var linesInProgress = NSMutableDictionary()
     var finishedLines = BNRLine[]()
     var selectedLine:BNRLine?
-    
+    var moveRecognizer:UIPanGestureRecognizer?
+
     init(frame: CGRect) {
+        
         super.init(frame: frame)
         self.backgroundColor = UIColor.grayColor()
         self.multipleTouchEnabled = true
@@ -30,7 +32,13 @@ class BNRDrawView: UIView {
         self.addGestureRecognizer(tapRecognizer)
         
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
-        self.addGestureRecognizer(longPressRecognizer)
+        
+        
+        let mRecognizer = UIPanGestureRecognizer(target: self, action: "moveLine:")
+        mRecognizer.delegate = self
+        mRecognizer.cancelsTouchesInView = false
+        self.moveRecognizer = mRecognizer
+        self.addGestureRecognizer(self.moveRecognizer!)
     }
     override func drawRect(rect: CGRect) {
         UIColor.blackColor().set()
@@ -99,6 +107,14 @@ class BNRDrawView: UIView {
     override func canBecomeFirstResponder() -> Bool {
         return true
     }
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer!, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer!) -> Bool {
+        let moveGestureRecognizer = self.moveRecognizer!
+        if gestureRecognizer == moveGestureRecognizer {
+            return true
+        }
+        return false
+    }
+    
     func strokeLine(line:BNRLine) {
         let bezierPath = UIBezierPath()
         bezierPath.lineWidth = 10
@@ -165,5 +181,23 @@ class BNRDrawView: UIView {
             self.selectedLine = nil
         }
         self.setNeedsDisplay()
+    }
+    func moveLine(gestureRecognizer:UIPanGestureRecognizer) {
+        if !self.selectedLine {
+            return
+        }
+        if gestureRecognizer.state == UIGestureRecognizerState.Changed {
+            let translation = gestureRecognizer.translationInView(self)
+            var start = self.selectedLine!.begin!
+            var end = self.selectedLine!.end!
+            start.x += translation.x
+            start.y += translation.y
+            end.x += translation.x
+            end.y += translation.y
+            self.selectedLine!.begin = start
+            self.selectedLine!.end = end
+            self.setNeedsDisplay()
+            gestureRecognizer.setTranslation(CGPointZero, inView: self)
+        }
     }
 }
