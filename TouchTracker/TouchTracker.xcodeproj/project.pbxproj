@@ -26,6 +26,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A025FCE9194A59F200F8FB07 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		A0723CE6194A467800EDE78F /* TouchTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0723CEA194A467800EDE78F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0723CEB194A467800EDE78F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +81,7 @@
 				A0723CEB194A467800EDE78F /* AppDelegate.swift */,
 				A0723D03194A469500EDE78F /* BNRLine.swift */,
 				A0723D07194A473200EDE78F /* BNRDrawView.swift */,
+				A025FCE9194A59F200F8FB07 /* MyPlayground.playground */,
 				A0723D09194A475300EDE78F /* BNRDrawViewController.swift */,
 				A0723CED194A467800EDE78F /* Images.xcassets */,
 				A0723CE9194A467800EDE78F /* Supporting Files */,
@@ -389,6 +391,7 @@
 				A0723CFF194A467900EDE78F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A0723D00194A467900EDE78F /* Build configuration list for PBXNativeTarget "TouchTrackerTests" */ = {
 			isa = XCConfigurationList;
@@ -397,6 +400,7 @@
 				A0723D02194A467900EDE78F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
