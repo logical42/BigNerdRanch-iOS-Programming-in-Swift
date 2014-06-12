@@ -17,14 +17,20 @@ class BNRDrawView: UIView {
         super.init(frame: frame)
         self.backgroundColor = UIColor.grayColor()
         self.multipleTouchEnabled = true
+        
+        // add gesture recognizers
         let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "doubleTap:")
         doubleTapRecognizer.numberOfTapsRequired = 2
         doubleTapRecognizer.delaysTouchesBegan = true
         self.addGestureRecognizer(doubleTapRecognizer)
+        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: "tap:")
         tapRecognizer.delaysTouchesBegan = true
         tapRecognizer.requireGestureRecognizerToFail(doubleTapRecognizer)
         self.addGestureRecognizer(tapRecognizer)
+        
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
+        self.addGestureRecognizer(longPressRecognizer)
     }
     override func drawRect(rect: CGRect) {
         UIColor.blackColor().set()
@@ -143,6 +149,21 @@ class BNRDrawView: UIView {
         let objectiveArray = self.finishedLines as NSArray
         let index = objectiveArray.indexOfObject(self.selectedLine!)
         self.finishedLines.removeAtIndex(index)
+        self.setNeedsDisplay()
+    }
+    func longPress(gestureRecognizer:UIGestureRecognizer) {
+        NSLog("FIRED longPress")
+        let point = gestureRecognizer.locationInView(self)
+        self.selectedLine = self.lineAtPoint(point)
+        // a bit hacky and deviates from the book here
+        // but this is because the state returned by the swift object seems 
+        // to be invalid
+        if self.selectedLine {
+            NSLog("Found selected line")
+            self.linesInProgress.removeAllObjects()
+        } else if gestureRecognizer.state == UIGestureRecognizerState.Ended {
+            self.selectedLine = nil
+        }
         self.setNeedsDisplay()
     }
 }
