@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BNRDetailViewController" customModule="Homepwner" customModuleProvider="target">
             <connections>
+                <outlet property="cameraButton" destination="1Jq-XF-mO1" id="7mO-gl-NIp"/>
                 <outlet property="dateLabel" destination="XAa-Jl-gcN" id="mBf-ZH-ywP"/>
                 <outlet property="imageView" destination="PYV-XE-hLs" id="Omk-ty-6DB"/>
                 <outlet property="nameField" destination="al8-QS-xVh" id="gNd-Kw-Lzx"/>

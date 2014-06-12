@@ -9,16 +9,20 @@
 import UIKit
 @IBDesignable
 class BNRItemsViewController: UITableViewController {
-//    @IBOutlet var _headerView:UIView?
-//    @IBInspectable var headerView:UIView {
-//        get {
-//            if _headerView? {
-//                return _headerView!
-//            }
-//            NSBundle.mainBundle().loadNibNamed("HeaderView", owner: self, options: nil)
-//            return _headerView!
-//        }
-//    }
+    
+    @IBAction func addNewItem(sender:AnyObject) {
+        let newItem = BNRItemStore.sharedStore.createItem()
+        let detailViewController = BNRDetailViewController(isNew: true)
+        detailViewController.item = newItem
+        let navController = UINavigationController(rootViewController: detailViewController)
+        navController.modalPresentationStyle = UIModalPresentationStyle.FormSheet
+        let dismissBlock: () -> Void = {
+            self.tableView!.reloadData()
+        }
+        detailViewController.dismissBlock = dismissBlock
+        self.presentViewController(navController, animated: true, completion: nil)
+    }
+    
     init() {
         super.init(style:UITableViewStyle.Plain)
         let navItem = self.navigationItem!
@@ -78,24 +82,6 @@ class BNRItemsViewController: UITableViewController {
         return cell
     }
     
-    @IBAction func addNewItem(sender:AnyObject) {
-        let newItem = BNRItemStore.sharedStore.createItem()
-        let lastRow = BNRItemStore.items.indexOfObject(newItem)
-        
-        let indexPath = NSIndexPath(forRow:lastRow, inSection: 0)
-        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Top)
-    }
-    
-//    @IBAction func toggleEditingMode(sender:AnyObject) {
-//        if self.editing {
-//            self.setEditing(false, animated: true)
-//            sender.setTitle("Editing", forState: UIControlState.Normal)
-//        }
-//        else {
-//            self.setEditing(true, animated: true)
-//            sender.setTitle("Done", forState: UIControlState.Normal)
-//        }
-//    }
     override func tableView(tableView: UITableView?, canEditRowAtIndexPath indexPath: NSIndexPath?) -> Bool {
         return true
     }
@@ -113,8 +99,9 @@ class BNRItemsViewController: UITableViewController {
     override func tableView(tableView: UITableView?, moveRowAtIndexPath fromIndexPath: NSIndexPath?, toIndexPath: NSIndexPath?) {
         BNRItemStore.sharedStore.moveItemAtIndex(fromIndexPath!.row, toIndex: toIndexPath!.row)
     }
+    
     override func tableView(tableView: UITableView?, didSelectRowAtIndexPath indexPath: NSIndexPath?) {
-        let detailViewController = BNRDetailViewController(nibName: nil, bundle: nil)
+        let detailViewController = BNRDetailViewController(isNew:false)
         detailViewController.item = BNRItemStore.items[indexPath!.row] as BNRItem
         self.navigationController.pushViewController(detailViewController, animated: true)
     }

@@ -10,7 +10,7 @@ import UIKit
 
 class BNRImageStore: NSObject {
     var dictionary:NSMutableDictionary
-    
+
     class var sharedStore:BNRImageStore {
         return GlobalImageStore
     }
