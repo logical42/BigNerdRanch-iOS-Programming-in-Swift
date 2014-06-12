@@ -9,7 +9,7 @@
 import UIKit
 
 class BNRDrawView: UIView {
-    var currentLine:BNRLine?
+    var linesInProgress = NSMutableDictionary()
     var finishedLines = BNRLine[]()
     init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,9 +21,11 @@ class BNRDrawView: UIView {
         for line in self.finishedLines {
             self.strokeLine(line)
         }
-        if self.currentLine {
-            UIColor.redColor().set()
-            self.strokeLine(self.currentLine!)
+        // hack since iteration in swift doesn't seem to handle 
+        // all enumerable types just yet
+        let keys = self.linesInProgress.allKeys as NSValue[]
+        for key in keys {
+            self.strokeLine(self.linesInProgress[key] as BNRLine)
         }
     }
     
@@ -36,38 +38,50 @@ class BNRDrawView: UIView {
         bezierPath.stroke()
     }
     override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!)  {
-        let touch = touches.anyObject() as UITouch
-        let location = touch.locationInView(self)
-        let newCurrentLine = BNRLine()
-        newCurrentLine.begin = location
-        newCurrentLine.end = location
-        self.currentLine = newCurrentLine
+        // hack since iteration in swift doesn't seem to handle
+        // all enumerable types just yet
+        let arrayOfTouches = touches.allObjects as UITouch[]
+        for touch in arrayOfTouches {
+            let location = touch.locationInView(self)
+            let line = BNRLine()
+            line.begin = location
+            line.end = location
+            let key = NSValue(nonretainedObject:touch)
+            self.linesInProgress[key] = line
+        }
         self.setNeedsDisplay()
     }
-    
     override func touchesMoved(touches: NSSet!, withEvent event: UIEvent!) {
-        let touch = touches.anyObject() as UITouch
-        let location = touch.locationInView(self)
-        if self.currentLine {
-            self.currentLine!.end = location
+        // hack since iteration in swift doesn't seem to handle
+        // all enumerable types just yet
+        let arrayOfTouches = touches.allObjects as UITouch[]
+        for touch in arrayOfTouches {
+            let key = NSValue(nonretainedObject:touch)
+            let line = self.linesInProgress[key] as BNRLine
+            line.end = touch.locationInView(self)
         }
         self.setNeedsDisplay()
     }
     override func touchesEnded(touches: NSSet!, withEvent event: UIEvent!) {
-        if self.currentLine {
-            self.finishedLines.append(self.currentLine!)
+        // hack since iteration in swift doesn't seem to handle
+        // all enumerable types just yet
+        let arrayOfTouches = touches.allObjects as UITouch[]
+        for touch in arrayOfTouches {
+            let key = NSValue(nonretainedObject:touch)
+            let line = self.linesInProgress[key] as BNRLine
+            self.finishedLines.append(line)
+            self.linesInProgress.removeObjectForKey(key)
         }
-        self.currentLine = nil
         self.setNeedsDisplay()
     }
-
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect)
-    {
-        // Drawing code
+    override func touchesCancelled(touches: NSSet!, withEvent event: UIEvent!) {
+        // hack since iteration in swift doesn't seem to handle
+        // all enumerable types just yet
+        let arrayOfTouches = touches.allObjects as UITouch[]
+        for touch in arrayOfTouches {
+            let key = NSValue(nonretainedObject:touch)
+            self.linesInProgress.removeObjectForKey(key)
+        }
+        self.setNeedsDisplay()
     }
-    */
-
 }
